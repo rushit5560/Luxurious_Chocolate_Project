@@ -7,6 +7,11 @@ abstract class Routes {
   static const contactUsScreenRoute = '/contactUs';
   static const newsLetterScreenRoute = '/newsLetter';
 
+  //products routes
+  static const productListScreenRoute = '/productList';
+  static const productDetailsScreenRoute = '/productDetails';
+  static const cartViewScreenRoute = '/cartView';
+
   //auth routes
   static const registerScreenRoute = '/register';
   static const loginScreenRoute = '/login';

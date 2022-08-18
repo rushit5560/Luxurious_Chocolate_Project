@@ -3,12 +3,10 @@ import 'package:get/get.dart';
 
 import 'package:luxurious_chocolate/controller/splash_controller/splash_controller.dart';
 import 'package:luxurious_chocolate/data/constants/appcolors.dart';
-import 'package:luxurious_chocolate/data/constants/enums.dart';
 import 'package:luxurious_chocolate/ui/screens/home_screen/home_screen_widgets.dart';
-import 'package:luxurious_chocolate/ui/widgets/custom_appbar/custom_appbar.dart';
-import 'package:luxurious_chocolate/ui/widgets/custom_appbar/custom_drawer/custom_drawer.dart';
 
 import '../../../data/constants/appimages.dart';
+import '../../widgets/custom_drawer/custom_drawer.dart';
 
 class HomeScreen extends GetView<SplashController> {
   const HomeScreen({Key? key}) : super(key: key);

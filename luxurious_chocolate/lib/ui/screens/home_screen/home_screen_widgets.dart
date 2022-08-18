@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:luxurious_chocolate/controller/home_controller/home_controller.dart';
 import 'package:luxurious_chocolate/data/constants/appcolors.dart';
 import 'package:luxurious_chocolate/data/constants/appimages.dart';
+import 'package:luxurious_chocolate/routes/app_pages.dart';
 
 class BannerListModule extends StatefulWidget {
   const BannerListModule({Key? key}) : super(key: key);
@@ -177,7 +178,14 @@ class CategorySingleItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(
+                        Routes.productListScreenRoute,
+                        arguments: [
+                          "ChocoBox",
+                        ],
+                      );
+                    },
                     child: const Text(
                       "Show",
                       style: TextStyle(
@@ -218,13 +226,14 @@ class TopProductsListModule extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          height: homeController.size.height * 0.2,
+          height: homeController.size.height * 0.24,
           width: double.infinity,
           child: ListView.builder(
             padding: const EdgeInsets.all(8),
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
             itemCount: 8,
+            itemExtent: 150,
 
             scrollDirection: Axis.horizontal,
             // shrinkWrap: true,
@@ -259,7 +268,7 @@ class TopProductSingleItem extends StatelessWidget {
             borderRadius: const BorderRadius.all(Radius.circular(12)),
             color: AppColors.whiteColor,
             border: Border.all(
-              color: Colors.grey,
+              color: AppColors.greyColor.withOpacity(0.5),
             ),
           ),
           child: Column(
@@ -273,29 +282,34 @@ class TopProductSingleItem extends StatelessWidget {
                 child: Image.asset(
                   "assets/images/choclate1.jpg",
                   fit: BoxFit.cover,
-                  height: homeController.size.width * 0.28,
-                  width: homeController.size.width * 0.3,
+                  height: homeController.size.width * 0.3,
+                  // width: homeController.size.width * 0.3,
                 ),
               ),
-              const SizedBox(height: 5),
-              const Text(
-                "Prod name",
-                style: TextStyle(
-                  color: AppColors.blackColor,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
+              // const SizedBox(height: 5),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Text(
+                    "Prod name",
+                    style: TextStyle(
+                      color: AppColors.blackColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    "\$27",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 2),
-              const Text(
-                "\$27",
-                style: TextStyle(
-                  color: Colors.green,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 5),
             ],
           ),
         ),

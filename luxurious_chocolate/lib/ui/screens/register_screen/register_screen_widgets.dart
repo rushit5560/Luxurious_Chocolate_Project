@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:luxurious_chocolate/controller/register_controller/register_controller.dart';
 import 'package:luxurious_chocolate/data/constants/appcolors.dart';
 import 'package:luxurious_chocolate/data/constants/appimages.dart';
+import 'package:luxurious_chocolate/routes/app_pages.dart';
+
+import '../../widgets/custom_textfield/custom_textfield.dart';
 
 class RegistrationFormModule extends StatelessWidget {
   RegistrationFormModule({Key? key}) : super(key: key);
@@ -26,6 +29,7 @@ class RegistrationFormModule extends StatelessWidget {
                 "Registration",
                 style: TextStyle(
                   color: AppColors.blackColor,
+                  fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
               ),
@@ -100,133 +104,13 @@ class RegistrationFormModule extends StatelessWidget {
               AcceptTermsAndConditionsCheckBox(),
               ReceiveEmailAndOfferCheckBox(),
 
-              const SizedBox(height: 12),
-              SignInButtonModule(),
-              const SizedBox(height: 12),
+              const SizedBox(height: 20),
+              SignUpButtonModule(),
+              const SizedBox(height: 25),
+              SignInTextModule(),
               const SizedBox(height: 12),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    Key? key,
-    required this.fieldController,
-    required this.hintText,
-  }) : super(key: key);
-
-  final TextEditingController fieldController;
-  final String hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    var border = OutlineInputBorder(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(12),
-      ),
-      borderSide: BorderSide(
-        color: AppColors.accentGoldColor.withOpacity(0.5),
-        width: 1,
-      ),
-    );
-    var errBorder = OutlineInputBorder(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(12),
-      ),
-      borderSide: BorderSide(
-        color: AppColors.redColor.withOpacity(0.5),
-        width: 1,
-      ),
-    );
-    return TextFormField(
-      autofocus: true,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      controller: fieldController,
-      decoration: InputDecoration(
-        border: border,
-        enabledBorder: border,
-        errorBorder: errBorder,
-        focusedBorder: border,
-        hintText: hintText,
-        hintStyle: const TextStyle(
-          color: AppColors.greyColor,
-          fontSize: 16,
-        ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-      ),
-    );
-  }
-}
-
-class CustomPassowrdTextField extends StatefulWidget {
-  const CustomPassowrdTextField({
-    Key? key,
-    required this.fieldController,
-    required this.hintText,
-  }) : super(key: key);
-
-  final TextEditingController fieldController;
-  final String hintText;
-
-  @override
-  State<CustomPassowrdTextField> createState() =>
-      _CustomPassowrdTextFieldState();
-}
-
-class _CustomPassowrdTextFieldState extends State<CustomPassowrdTextField> {
-  bool isObscure = true;
-  @override
-  Widget build(BuildContext context) {
-    var border = OutlineInputBorder(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(12),
-      ),
-      borderSide: BorderSide(
-        color: AppColors.accentGoldColor.withOpacity(0.5),
-        width: 1,
-      ),
-    );
-    var errBorder = OutlineInputBorder(
-      borderRadius: const BorderRadius.all(
-        Radius.circular(12),
-      ),
-      borderSide: BorderSide(
-        color: AppColors.redColor.withOpacity(0.5),
-        width: 1,
-      ),
-    );
-    return TextFormField(
-      autofocus: true,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      controller: widget.fieldController,
-      obscureText: isObscure,
-      decoration: InputDecoration(
-        border: border,
-        enabledBorder: border,
-        errorBorder: errBorder,
-        focusedBorder: border,
-        hintText: widget.hintText,
-        hintStyle: const TextStyle(
-          color: AppColors.greyColor,
-          fontSize: 16,
-        ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-        suffixIcon: IconButton(
-          icon: Icon(
-            isObscure ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.accentGoldColor,
-          ),
-          onPressed: () {
-            setState(() {
-              isObscure = !isObscure;
-            });
-          },
         ),
       ),
     );
@@ -316,17 +200,17 @@ class ReceiveEmailAndOfferCheckBox extends StatelessWidget {
   }
 }
 
-class SignInButtonModule extends StatelessWidget {
-  SignInButtonModule({Key? key}) : super(key: key);
+class SignUpButtonModule extends StatelessWidget {
+  SignUpButtonModule({Key? key}) : super(key: key);
   final registerController = Get.find<RegisterController>();
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return OutlinedButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Text(
-            "Sign In",
+            "Sign Up",
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,
@@ -334,7 +218,10 @@ class SignInButtonModule extends StatelessWidget {
             ),
           ),
           SizedBox(width: 10),
-          Icon(Icons.arrow_forward_rounded),
+          Icon(
+            Icons.arrow_forward_rounded,
+            color: AppColors.whiteColor,
+          ),
         ],
       ),
       style: ElevatedButton.styleFrom(
@@ -347,6 +234,41 @@ class SignInButtonModule extends StatelessWidget {
         ),
       ),
       onPressed: () {},
+    );
+  }
+}
+
+class SignInTextModule extends StatelessWidget {
+  SignInTextModule({Key? key}) : super(key: key);
+  final registerController = Get.find<RegisterController>();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "I have an account? -",
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: AppColors.blackColor,
+          ),
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Get.toNamed(Routes.loginScreenRoute);
+          },
+          child: const Text(
+            " Sign In Now",
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: AppColors.greenColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

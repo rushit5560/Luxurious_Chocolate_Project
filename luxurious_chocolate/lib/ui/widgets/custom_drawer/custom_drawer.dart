@@ -27,9 +27,31 @@ class CustomDrawer extends StatelessWidget {
                   onTap: () {},
                 ),
                 singleListItem(
+                  tileIcon: Icons.account_circle,
+                  tileText: "Account",
+                  onTap: () {},
+                ),
+                singleListItem(
+                  tileIcon: Icons.favorite_rounded,
+                  tileText: "Wishlist",
+                  onTap: () {},
+                ),
+                singleListItem(
+                  tileIcon: Icons.checklist_rounded,
+                  tileText: "Orders",
+                  onTap: () {},
+                ),
+                singleListItem(
+                  tileIcon: Icons.home_work_rounded,
+                  tileText: "Address",
+                  onTap: () {},
+                ),
+                singleListItem(
                   tileIcon: Icons.contact_support_rounded,
                   tileText: "Contact Us",
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.contactUsScreenRoute);
+                  },
                 ),
                 singleListItem(
                   tileIcon: Icons.newspaper_rounded,
@@ -41,7 +63,7 @@ class CustomDrawer extends StatelessWidget {
           ),
           singleListItem(
             tileIcon: Icons.login_rounded,
-            tileText: "Register / Login",
+            tileText: "Register / Login or Logout",
             onTap: () {
               Get.toNamed(Routes.registerScreenRoute);
             },

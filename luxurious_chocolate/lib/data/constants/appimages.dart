@@ -5,4 +5,5 @@ class AppImages {
 
   //asset images
   static const String detailsBgChocoImage = imagesPath + "chcoimage1.jpg";
+  static const String bannerImage = imagesPath + "banner1.png";
 }

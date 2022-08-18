@@ -6,6 +6,10 @@ class ForgetPasswordController extends GetxController {
   final size = Get.size;
   final GlobalKey<ScaffoldState> foldKey = GlobalKey();
 
+  final GlobalKey<FormState> formKey = GlobalKey();
+
+  final emailController = TextEditingController();
+
   navigateToHomeScreen() {
     Get.off(Routes.homeScreenRoute);
   }
