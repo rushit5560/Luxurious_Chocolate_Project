@@ -17,10 +17,10 @@ class ContactUsScreen extends GetView<ContactUsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      appBar: CustomAppBar("Contact Us"),
+      appBar: CustomAppBar("Contact Us".tr),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const ClampingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               ContactUsModule(),

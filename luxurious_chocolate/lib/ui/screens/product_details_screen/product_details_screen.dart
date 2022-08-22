@@ -16,7 +16,7 @@ class ProductDetailsScreen extends GetView<ProductDetailsController> {
       appBar: CustomAppBar(controller.productName),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

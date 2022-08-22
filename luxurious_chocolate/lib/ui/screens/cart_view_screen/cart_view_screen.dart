@@ -13,7 +13,7 @@ class CartViewScreen extends GetView<CartViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      appBar: CustomAppBar("Your Cart"),
+      appBar: CustomAppBar("My Cart".tr),
       body: SafeArea(
         child: Obx(
           () => controller.isLoading.value

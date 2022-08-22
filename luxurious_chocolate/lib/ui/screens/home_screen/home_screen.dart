@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:luxurious_chocolate/controller/home_controller/home_controller.dart';
 
 import 'package:luxurious_chocolate/controller/splash_controller/splash_controller.dart';
 import 'package:luxurious_chocolate/data/constants/appcolors.dart';
@@ -8,7 +9,7 @@ import 'package:luxurious_chocolate/ui/screens/home_screen/home_screen_widgets.d
 import '../../../data/constants/appimages.dart';
 import '../../widgets/custom_drawer/custom_drawer.dart';
 
-class HomeScreen extends GetView<SplashController> {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -39,10 +40,10 @@ class HomeScreen extends GetView<SplashController> {
           ),
         ),
       ),
-      drawer: const CustomDrawer(),
+      drawer: CustomDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
               const BannerListModule(),

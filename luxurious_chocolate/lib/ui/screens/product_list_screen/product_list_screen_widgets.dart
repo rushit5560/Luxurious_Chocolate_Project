@@ -106,7 +106,7 @@ class GridViewProductsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: const EdgeInsets.all(8),
-      physics: const ClampingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: 8,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -200,24 +200,16 @@ class ProductGridSingleItem extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
+        const Positioned(
           right: 5,
-          top: 5,
+          top: 15,
           child: Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: const BoxDecoration(
-                color: AppColors.whiteColor,
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.grey,
-                  size: 20,
-                ),
+            padding: EdgeInsets.only(right: 8),
+            child: Center(
+              child: Icon(
+                Icons.favorite_border_rounded,
+                color: AppColors.greyColor,
+                size: 25,
               ),
             ),
           ),
@@ -235,7 +227,7 @@ class ListViewProductsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(8),
-      physics: const ClampingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: 8,
       // itemExtent: prodListController.size.width * 0.3,
@@ -330,27 +322,19 @@ class ProductListSingleItem extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
+        const Positioned(
           right: 4,
           top: 4,
           child: Padding(
-            padding: const EdgeInsets.only(
+            padding: EdgeInsets.only(
               right: 5,
               top: 5,
             ),
-            child: Container(
-              height: 30,
-              width: 30,
-              decoration: BoxDecoration(
-                color: AppColors.greyColor.withOpacity(0.45),
-                shape: BoxShape.circle,
-              ),
-              child: const Center(
-                child: Icon(
-                  Icons.favorite_border_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
+            child: Center(
+              child: Icon(
+                Icons.favorite_border_rounded,
+                color: AppColors.greyColor,
+                size: 25,
               ),
             ),
           ),
@@ -367,7 +351,7 @@ class SignInButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [

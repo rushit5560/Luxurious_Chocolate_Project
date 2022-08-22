@@ -30,9 +30,9 @@ class GetInTouchModule extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 5),
-          const Text(
-            "Get In Touch",
-            style: TextStyle(
+          Text(
+            "Get In Touch".tr,
+            style: const TextStyle(
               color: AppColors.blackColor,
               fontSize: 24,
             ),
@@ -43,21 +43,21 @@ class GetInTouchModule extends StatelessWidget {
             color: AppColors.accentGoldColor.withOpacity(0.6),
           ),
           const SizedBox(height: 15),
-          const ContactInfoRowMoule(
+          ContactInfoRowMoule(
             iconData: Icons.house_rounded,
-            titleText: "Address",
+            titleText: "Address".tr,
             descText: "7000, WhiteField, Manchester Highway, London. 401203",
           ),
           const SizedBox(height: 15),
-          const ContactInfoRowMoule(
+          ContactInfoRowMoule(
             iconData: Icons.email_rounded,
-            titleText: "Email / Fax",
+            titleText: "Email".tr + " / " + "Fax".tr,
             descText: "info@LuxuriousChocolate.com",
           ),
           const SizedBox(height: 15),
-          const ContactInfoRowMoule(
+          ContactInfoRowMoule(
             iconData: Icons.house_rounded,
-            titleText: "Phone",
+            titleText: "Phone".tr,
             descText: "971000000000",
           ),
           const SizedBox(height: 15),
@@ -134,8 +134,8 @@ class ContactUsModule extends StatelessWidget {
         children: [
           const SizedBox(height: 15),
 
-          const Text(
-            "Contact Us",
+          Text(
+            "Contact Us".tr,
             style: TextStyle(
               color: AppColors.blackColor,
               fontWeight: FontWeight.bold,
@@ -150,8 +150,8 @@ class ContactUsModule extends StatelessWidget {
           const SizedBox(height: 15),
 
           //form fields
-          const Text(
-            "  Name",
+          Text(
+            "Name".tr,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -165,8 +165,8 @@ class ContactUsModule extends StatelessWidget {
             // validator: (value) => FieldValidator().validateEmail(value!)!,
           ),
           const SizedBox(height: 12),
-          const Text(
-            "  Email",
+          Text(
+            "Email".tr,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -180,8 +180,8 @@ class ContactUsModule extends StatelessWidget {
             // validator: (value) => FieldValidator().validateEmail(value!)!,
           ),
           const SizedBox(height: 12),
-          const Text(
-            "  Phone Number",
+          Text(
+            "Phone Number".tr,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -195,8 +195,8 @@ class ContactUsModule extends StatelessWidget {
             // validator: (value) => FieldValidator().validateEmail(value!)!,
           ),
           const SizedBox(height: 12),
-          const Text(
-            "  Subject",
+          Text(
+            "Subject".tr,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -210,8 +210,8 @@ class ContactUsModule extends StatelessWidget {
             // validator: (value) => FieldValidator().validateEmail(value!)!,
           ),
           const SizedBox(height: 12),
-          const Text(
-            "  Comment",
+          Text(
+            "Comment".tr,
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
@@ -247,7 +247,7 @@ class SubmitButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [

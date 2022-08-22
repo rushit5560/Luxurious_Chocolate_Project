@@ -4,6 +4,7 @@ import 'package:luxurious_chocolate/data/constants/appcolors.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:luxurious_chocolate/ui/screens/forget_password_screen/forget_password_screen_widgets.dart';
+import 'package:luxurious_chocolate/ui/widgets/custom_appbar/custom_appbar.dart';
 
 import '../../../controller/forget_password_controller/forget_password_controller.dart';
 
@@ -14,6 +15,7 @@ class ForgetPasswordScreen extends GetView<ForgetPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
+      appBar: CustomAppBar("Forgot Password".tr),
       body: SafeArea(
         child: EmailFormModule(),
       ),

@@ -10,13 +10,19 @@ abstract class Routes {
   //products routes
   static const productListScreenRoute = '/productList';
   static const productDetailsScreenRoute = '/productDetails';
+  static const orderDetailsScreenRoute = '/orderDetails';
   static const cartViewScreenRoute = '/cartView';
+  static const checkoutScreenRoute = '/checkout';
+  static const orderConfirmScreenRoute = '/orderConfirm';
 
   //auth routes
   static const registerScreenRoute = '/register';
   static const loginScreenRoute = '/login';
   static const forgetPasswordScreenRoute = '/forgetPassword';
 
-  //in app routes
-  static const addressRoute = '/address';
+  //my acount routes
+  static const accountScreenRoute = '/account';
+  static const wishlistScreenRoute = '/wishlist';
+  static const ordersScreenRoute = '/orders';
+  static const addressScreenRoute = '/address';
 }

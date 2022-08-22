@@ -17,7 +17,7 @@ class ProductListScreen extends GetView<ProductListController> {
       body: SafeArea(
         child: Obx(
           () => SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
                 FilterViewProductsModule(),

@@ -213,10 +213,10 @@ class TopProductsListModule extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
           child: Text(
-            "Top Products",
+            "Top Products".tr,
             style: TextStyle(
               color: AppColors.blackColor,
               fontSize: 18,
@@ -230,7 +230,7 @@ class TopProductsListModule extends StatelessWidget {
           width: double.infinity,
           child: ListView.builder(
             padding: const EdgeInsets.all(8),
-            physics: const ClampingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             itemCount: 8,
             itemExtent: 150,

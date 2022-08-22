@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:luxurious_chocolate/controller/cart_view_controller/cart_view_controller.dart';
 import 'package:luxurious_chocolate/data/constants/appimages.dart';
+import 'package:luxurious_chocolate/routes/app_pages.dart';
 
 import '../../../data/constants/appcolors.dart';
 
@@ -14,7 +15,7 @@ class CartProductsListViewModule extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: ListView.separated(
         shrinkWrap: true,
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: 5,
         scrollDirection: Axis.vertical,
         itemBuilder: ((context, index) {
@@ -302,7 +303,7 @@ class CheckoutButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: OutlinedButton(
+      child: ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -330,7 +331,9 @@ class CheckoutButtonModule extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Get.toNamed(Routes.checkoutScreenRoute);
+        },
       ),
     );
   }

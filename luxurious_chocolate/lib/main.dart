@@ -17,15 +17,15 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.initial,
-      // translations: Messages(), // your translations
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       defaultTransition: Transition.fade,
-
       getPages: AppPages.pages,
+      //Language
       locale: const Locale('en', 'US'),
-      translationsKeys: AppTranslation.translations,
+      translations: AppTranslation(),
+      fallbackLocale: const Locale('en', 'US'),
     );
   }
 }

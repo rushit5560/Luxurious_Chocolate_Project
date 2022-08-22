@@ -16,7 +16,7 @@ class RegistrationFormModule extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
       child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Form(
           key: registerController.formKey,
           child: Column(
@@ -25,8 +25,8 @@ class RegistrationFormModule extends StatelessWidget {
             children: [
               Image.asset(AppImages.appLogo),
               const SizedBox(height: 25),
-              const Text(
-                "Registration",
+              Text(
+                "Registration".tr,
                 style: TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
@@ -56,8 +56,8 @@ class RegistrationFormModule extends StatelessWidget {
               ),
 
               const SizedBox(height: 12),
-              const Text(
-                "  Email",
+              Text(
+                "Email".tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -70,8 +70,8 @@ class RegistrationFormModule extends StatelessWidget {
                 hintText: "Enter E-mail",
               ),
               const SizedBox(height: 12),
-              const Text(
-                "  Password",
+              Text(
+                "Password".tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -85,8 +85,8 @@ class RegistrationFormModule extends StatelessWidget {
                 hintText: "Enter Password",
               ),
               const SizedBox(height: 12),
-              const Text(
-                "  Confirm Password",
+              Text(
+                "Confirm Password".tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -145,8 +145,8 @@ class AcceptTermsAndConditionsCheckBox extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
-          "Accept Terms & Conditions",
+        Text(
+          "Accept Terms & Condtions".tr,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,
@@ -187,8 +187,8 @@ class ReceiveEmailAndOfferCheckBox extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        const Text(
-          "Yes, I'd Love To Receive Emails For Offers",
+        Text(
+          "Yes, I’d love to receive emails for offers.".tr,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,
@@ -205,12 +205,12 @@ class SignUpButtonModule extends StatelessWidget {
   final registerController = Get.find<RegisterController>();
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Text(
-            "Sign Up",
+            "Register",
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,

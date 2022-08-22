@@ -327,7 +327,7 @@ class AddToCartButtonModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 50,
-      child: OutlinedButton(
+      child: ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -377,7 +377,7 @@ class AddToWishListModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       flex: 60,
-      child: OutlinedButton(
+      child: ElevatedButton(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
@@ -422,10 +422,10 @@ class ProductDetailsModule extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           SizedBox(height: 10),
           Text(
-            "Product Details",
+            "Product Detail".tr,
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

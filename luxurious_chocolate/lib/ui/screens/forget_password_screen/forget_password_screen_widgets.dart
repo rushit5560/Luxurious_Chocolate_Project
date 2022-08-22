@@ -14,7 +14,7 @@ class EmailFormModule extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
       child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Form(
           key: loginController.formKey,
           child: Column(
@@ -23,8 +23,8 @@ class EmailFormModule extends StatelessWidget {
             children: [
               Image.asset(AppImages.appLogo),
               const SizedBox(height: 35),
-              const Text(
-                "Forgot password",
+              Text(
+                "Forgot Password".tr,
                 style: TextStyle(
                   color: AppColors.blackColor,
                   fontSize: 24,
@@ -38,8 +38,8 @@ class EmailFormModule extends StatelessWidget {
               const SizedBox(height: 15),
 
               //form fields
-              const Text(
-                "No worried! Enter your email and we will send a reset.",
+              Text(
+                "No worried! Enter your email and we will send a reset.".tr,
                 style: TextStyle(
                   color: AppColors.accentGoldColor,
                   fontSize: 17,
@@ -47,8 +47,8 @@ class EmailFormModule extends StatelessWidget {
               ),
 
               const SizedBox(height: 25),
-              const Text(
-                "  Email",
+              Text(
+                "Email".tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -58,7 +58,7 @@ class EmailFormModule extends StatelessWidget {
               const SizedBox(height: 10),
               CustomTextField(
                 fieldController: loginController.emailController,
-                hintText: "E-mail",
+                hintText: "Email".tr,
                 // validator: (value) => FieldValidator().validateEmail(value!)!,
               ),
 
@@ -82,12 +82,12 @@ class SignInButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [
           Text(
-            "Send ",
+            "Send",
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,

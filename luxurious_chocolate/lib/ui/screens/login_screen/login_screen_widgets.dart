@@ -16,7 +16,7 @@ class LoginFormModule extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 15),
       child: SingleChildScrollView(
-        physics: const ClampingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Form(
           key: loginController.formKey,
           child: Column(
@@ -25,8 +25,8 @@ class LoginFormModule extends StatelessWidget {
             children: [
               Image.asset(AppImages.appLogo),
               const SizedBox(height: 35),
-              const Text(
-                "Log In",
+              Text(
+                "Log In".tr,
                 style: TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
@@ -42,8 +42,8 @@ class LoginFormModule extends StatelessWidget {
 
               //form fields
 
-              const Text(
-                "  Email",
+              Text(
+                "Email".tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -57,8 +57,8 @@ class LoginFormModule extends StatelessWidget {
                 // validator: (value) => FieldValidator().validateEmail(value!)!,
               ),
               const SizedBox(height: 12),
-              const Text(
-                "  Password",
+              Text(
+                "Password".tr,
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -80,8 +80,8 @@ class LoginFormModule extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(Routes.forgetPasswordScreenRoute);
                 },
-                child: const Text(
-                  "  Forgot password",
+                child: Text(
+                  "Forgot Password".tr,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -112,12 +112,12 @@ class SignInButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
+    return ElevatedButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           Text(
-            "Log In",
+            "Log In".tr,
             style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.bold,
