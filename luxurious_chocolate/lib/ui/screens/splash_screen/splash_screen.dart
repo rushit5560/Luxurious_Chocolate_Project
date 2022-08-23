@@ -42,7 +42,6 @@ class SplashScreen extends GetView<SplashController> {
       // ),
       photoSize: controller.size.height * 0.1,
       useLoader: true,
-      
     );
   }
 }

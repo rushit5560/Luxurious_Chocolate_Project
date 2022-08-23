@@ -3,19 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../data/constants/appcolors.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {Key? key,
-      required this.fieldController,
-      required this.hintText,
-      this.validator,
-      this.textInputAction})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    required this.fieldController,
+    required this.hintText,
+    this.validator,
+  }) : super(key: key);
 
   final TextEditingController fieldController;
-
   final String hintText;
-  final FormFieldValidator<String>? validator;
-  final TextInputAction? textInputAction;
+  final String Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +37,6 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       // autofocus: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-
-      validator: validator,
-      textInputAction: textInputAction,
       controller: fieldController,
       decoration: InputDecoration(
         border: border,
@@ -67,13 +61,11 @@ class CustomPassowrdTextField extends StatefulWidget {
     required this.fieldController,
     required this.hintText,
     this.validator,
-    this.textInputAction,
   }) : super(key: key);
 
   final TextEditingController fieldController;
   final String hintText;
-  final FormFieldValidator<String>? validator;
-  final TextInputAction? textInputAction;
+  final String Function(String?)? validator;
 
   @override
   State<CustomPassowrdTextField> createState() =>
@@ -105,7 +97,6 @@ class _CustomPassowrdTextFieldState extends State<CustomPassowrdTextField> {
     return TextFormField(
       // autofocus: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      textInputAction: widget.textInputAction,
       controller: widget.fieldController,
       obscureText: isObscure,
       validator: widget.validator,

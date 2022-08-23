@@ -16,12 +16,8 @@ class RegisterScreen extends GetView<RegisterController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      body: Obx(
-        () => controller.isDataLoading.value
-            ? const CircularProgressIndicator()
-            : SafeArea(
-                child: RegistrationFormModule(),
-              ),
+      body: SafeArea(
+        child: RegistrationFormModule(),
       ),
     );
   }
