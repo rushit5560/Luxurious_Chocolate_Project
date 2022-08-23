@@ -361,7 +361,7 @@ class FieldValidator {
     if (value.isEmpty) {
       return "Confirm password is required";
     } else if (value != value2) {
-      return "Password must be at least one special character";
+      return "Password and Confirm password does not match";
     } else {
       return null;
     }
