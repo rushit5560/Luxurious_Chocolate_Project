@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:luxurious_chocolate/controller/register_controller/register_controller.dart';
@@ -5,7 +7,9 @@ import 'package:luxurious_chocolate/data/constants/appcolors.dart';
 import 'package:luxurious_chocolate/data/constants/appimages.dart';
 import 'package:luxurious_chocolate/routes/app_pages.dart';
 
+import '../../../data/field_validation.dart';
 import '../../widgets/custom_textfield/custom_textfield.dart';
+import '../../widgets/helper_widgets/helper_toasts.dart';
 
 class RegistrationFormModule extends StatelessWidget {
   RegistrationFormModule({Key? key}) : super(key: key);
@@ -42,7 +46,7 @@ class RegistrationFormModule extends StatelessWidget {
 
               //form fields
               const Text(
-                "  Full Name",
+                "Full Name",
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
@@ -53,6 +57,8 @@ class RegistrationFormModule extends StatelessWidget {
               CustomTextField(
                 fieldController: registerController.fullNameController,
                 hintText: "Enter Name",
+                textInputAction: TextInputAction.next,
+                validator: (value) => FieldValidator().validateFullName(value!),
               ),
 
               const SizedBox(height: 12),
@@ -68,6 +74,8 @@ class RegistrationFormModule extends StatelessWidget {
               CustomTextField(
                 fieldController: registerController.emailController,
                 hintText: "Enter E-mail",
+                textInputAction: TextInputAction.next,
+                validator: (value) => FieldValidator().validateEmail(value!),
               ),
               const SizedBox(height: 12),
               Text(
@@ -83,6 +91,11 @@ class RegistrationFormModule extends StatelessWidget {
               CustomPassowrdTextField(
                 fieldController: registerController.passwordController,
                 hintText: "Enter Password",
+                textInputAction: TextInputAction.next,
+                validator: (value) => FieldValidator().validateConfirmPassword(
+                  value!,
+                  registerController.passwordController.text,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
@@ -96,6 +109,7 @@ class RegistrationFormModule extends StatelessWidget {
               const SizedBox(height: 10),
               CustomPassowrdTextField(
                 fieldController: registerController.confirmPasswordController,
+                textInputAction: TextInputAction.done,
                 hintText: "Enter Confirm Password",
               ),
               const SizedBox(height: 12),
@@ -117,12 +131,20 @@ class RegistrationFormModule extends StatelessWidget {
   }
 }
 
-class AcceptTermsAndConditionsCheckBox extends StatelessWidget {
+class AcceptTermsAndConditionsCheckBox extends StatefulWidget {
   AcceptTermsAndConditionsCheckBox({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<AcceptTermsAndConditionsCheckBox> createState() =>
+      _AcceptTermsAndConditionsCheckBoxState();
+}
+
+class _AcceptTermsAndConditionsCheckBoxState
+    extends State<AcceptTermsAndConditionsCheckBox> {
   final registerController = Get.find<RegisterController>();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -141,6 +163,8 @@ class AcceptTermsAndConditionsCheckBox extends StatelessWidget {
             value: registerController.termsAndConditionsCheckBoxBool.value,
             onChanged: (value) {
               registerController.termsAndConditionsCheckBoxBool.value = value!;
+              setState(() {});
+              log("terms & condi check : ${registerController.termsAndConditionsCheckBoxBool.value}");
             },
           ),
         ),
@@ -158,11 +182,18 @@ class AcceptTermsAndConditionsCheckBox extends StatelessWidget {
   }
 }
 
-class ReceiveEmailAndOfferCheckBox extends StatelessWidget {
+class ReceiveEmailAndOfferCheckBox extends StatefulWidget {
   ReceiveEmailAndOfferCheckBox({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ReceiveEmailAndOfferCheckBox> createState() =>
+      _ReceiveEmailAndOfferCheckBoxState();
+}
+
+class _ReceiveEmailAndOfferCheckBoxState
+    extends State<ReceiveEmailAndOfferCheckBox> {
   final registerController = Get.find<RegisterController>();
 
   @override
@@ -183,6 +214,10 @@ class ReceiveEmailAndOfferCheckBox extends StatelessWidget {
             value: registerController.emailAndOffersCheckBoxBool.value,
             onChanged: (value) {
               registerController.emailAndOffersCheckBoxBool.value = value!;
+
+              setState(() {});
+
+              log("receive emails check : ${registerController.emailAndOffersCheckBoxBool.value}");
             },
           ),
         ),
@@ -206,23 +241,27 @@ class SignUpButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text(
-            "Register",
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-              color: AppColors.whiteColor,
-            ),
-          ),
-          SizedBox(width: 10),
-          Icon(
-            Icons.arrow_forward_rounded,
-            color: AppColors.whiteColor,
-          ),
-        ],
+      child: Center(
+        child: registerController.isDataLoading.value
+            ? HelperToasts().showCircularWhiteLoader()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Sign Up".tr,
+                    style: const TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(
+                    Icons.arrow_forward_rounded,
+                    color: AppColors.whiteColor,
+                  ),
+                ],
+              ),
       ),
       style: ElevatedButton.styleFrom(
         primary: AppColors.greenColor,
@@ -233,7 +272,9 @@ class SignUpButtonModule extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        registerController.submitRegisterForm();
+      },
     );
   }
 }

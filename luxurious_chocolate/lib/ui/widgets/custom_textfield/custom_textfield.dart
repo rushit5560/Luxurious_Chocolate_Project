@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import '../../../data/constants/appcolors.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({
-    Key? key,
-    required this.fieldController,
-    required this.hintText,
-    this.validator,
-  }) : super(key: key);
+  const CustomTextField(
+      {Key? key,
+      required this.fieldController,
+      required this.hintText,
+      this.validator,
+      this.textInputAction})
+      : super(key: key);
 
   final TextEditingController fieldController;
   final String hintText;
-  final String Function(String?)? validator;
+  final FormFieldValidator<String>? validator;
+  final TextInputAction? textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,8 @@ class CustomTextField extends StatelessWidget {
       // autofocus: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: fieldController,
+      validator: validator,
+      textInputAction: textInputAction,
       decoration: InputDecoration(
         border: border,
         enabledBorder: border,
@@ -49,7 +53,7 @@ class CustomTextField extends StatelessWidget {
           fontSize: 16,
         ),
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+            const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
       ),
     );
   }
@@ -61,11 +65,13 @@ class CustomPassowrdTextField extends StatefulWidget {
     required this.fieldController,
     required this.hintText,
     this.validator,
+    this.textInputAction,
   }) : super(key: key);
 
   final TextEditingController fieldController;
   final String hintText;
-  final String Function(String?)? validator;
+  final FormFieldValidator<String>? validator;
+  final TextInputAction? textInputAction;
 
   @override
   State<CustomPassowrdTextField> createState() =>

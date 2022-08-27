@@ -290,6 +290,20 @@ class FieldValidator {
     }
   }
 
+  String? validateSubjectField(String value) {
+    if (value.isEmpty) {
+      return "Subject is required";
+    }
+    return null;
+  }
+
+  String? validateMessageField(String value) {
+    if (value.isEmpty) {
+      return "Message is required";
+    }
+    return null;
+  }
+
   String? validatePassword(String value) {
     if (value.isEmpty) {
       return "Password is required";
@@ -361,7 +375,7 @@ class FieldValidator {
     if (value.isEmpty) {
       return "Confirm password is required";
     } else if (value != value2) {
-      return "Password must be at least one special character";
+      return "Password and Confirm password does not match";
     } else {
       return null;
     }

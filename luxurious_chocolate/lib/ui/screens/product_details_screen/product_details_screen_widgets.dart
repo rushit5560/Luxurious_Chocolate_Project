@@ -1,9 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:luxurious_chocolate/controller/login_controller/login_controller.dart';
 import 'package:luxurious_chocolate/data/constants/appimages.dart';
 import 'package:luxurious_chocolate/routes/app_pages.dart';
-import 'package:quantity_input/quantity_input.dart';
 
 import '../../../controller/product_details_controller/product_details_controller.dart';
 import '../../../data/constants/appcolors.dart';
@@ -13,13 +13,14 @@ class ProductImageCarouselModule extends StatelessWidget {
   final proDetailsController = Get.find<ProductDetailsController>();
   @override
   Widget build(BuildContext context) {
+    var product = proDetailsController.productDetailsModel!.data[0];
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: proDetailsController.size.height * 0.35,
           width: double.infinity,
           child: PageView.builder(
-            itemCount: 3,
+            itemCount: product.images.length,
             allowImplicitScrolling: true,
             itemBuilder: (context, index) {
               return Image.asset(
@@ -35,15 +36,15 @@ class ProductImageCarouselModule extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: indicators(
-            3,
-            1,
+            imagesLength: product.images.length,
+            currentIndex: 0,
           ),
         )
       ],
     );
   }
 
-  List<Widget> indicators(imagesLength, currentIndex) {
+  List<Widget> indicators({imagesLength, currentIndex}) {
     return List<Widget>.generate(imagesLength, (index) {
       return Container(
         margin: const EdgeInsets.all(3),
@@ -63,32 +64,33 @@ class ProductTitleAndInfoModule extends StatelessWidget {
   final proDetailsController = Get.find<ProductDetailsController>();
   @override
   Widget build(BuildContext context) {
+    var productDetails = proDetailsController.productDetailsModel!.data[0];
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
+        children: [
           Text(
-            "Oreo Truffles box ",
-            style: TextStyle(
+            productDetails.productname,
+            style: const TextStyle(
               color: AppColors.blackColor,
               fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Text(
-            "\$185",
-            style: TextStyle(
+            "\$${productDetails.productcost}",
+            style: const TextStyle(
               color: AppColors.greenColor,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            "Oreo Truffles box ",
-            style: TextStyle(
+            productDetails.fullText,
+            style: const TextStyle(
               color: AppColors.blackColor,
               fontSize: 17,
               fontWeight: FontWeight.w400,
@@ -105,6 +107,16 @@ class ProductInStockStatModule extends StatelessWidget {
   final proDetailsController = Get.find<ProductDetailsController>();
   @override
   Widget build(BuildContext context) {
+    var product = proDetailsController.productDetailsModel!.data[0];
+
+    if (product.outofStockStatus.contains("instock")) {
+      proDetailsController.isProdInStock.value = true;
+
+      log("product is in stock : ${proDetailsController.isProdInStock.value}");
+    } else {
+      proDetailsController.isProdInStock.value = false;
+      log("product is in stock : ${proDetailsController.isProdInStock.value}");
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Row(
@@ -113,15 +125,19 @@ class ProductInStockStatModule extends StatelessWidget {
           Container(
             height: 15,
             width: 15,
-            decoration: const BoxDecoration(
-              color: AppColors.greenColor,
+            decoration: BoxDecoration(
+              color: proDetailsController.isProdInStock.value == true
+                  ? AppColors.greenColor
+                  : AppColors.redColor,
               shape: BoxShape.circle,
             ),
           ),
           const SizedBox(width: 12),
-          const Text(
-            "instock",
-            style: TextStyle(
+          Text(
+            proDetailsController.isProdInStock.value == true
+                ? "instock"
+                : "out of stock",
+            style: const TextStyle(
               color: AppColors.blackColor,
               fontSize: 17,
               fontWeight: FontWeight.w500,
@@ -158,6 +174,8 @@ class ProductQuantityModule extends StatelessWidget {
               onChanged: (val) {
                 proDetailsController.selectedQuantityValue.value = val;
               },
+              maxValue:
+                  proDetailsController.productDetailsModel!.data[0].quantity,
             ),
           ),
         ],
@@ -423,22 +441,22 @@ class ProductDetailsModule extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             "Product Detail".tr,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.blackColor,
             ),
           ),
-          SizedBox(height: 8),
-          Divider(
+          const SizedBox(height: 8),
+          const Divider(
             color: AppColors.accentGoldColor,
             thickness: 0.6,
           ),
-          SizedBox(height: 12),
-          Text(
+          const SizedBox(height: 12),
+          const Text(
             "Product gagdfah efasfojolfeufy efuiefh Product gagdfah efasfojolfeufy efuiefh Product gagdfah efasfojolfeufy efuiefh Product gagdfah efasfojolfeufy efuiefh",
             maxLines: null,
             style: TextStyle(
@@ -459,12 +477,12 @@ class QuantityWidget extends StatefulWidget {
 
   final ValueChanged<int> onChanged;
 
-  QuantityWidget(
-      {Key? key,
-      this.minValue = 1,
-      this.maxValue = 1000,
-      required this.onChanged})
-      : super(key: key);
+  const QuantityWidget({
+    Key? key,
+    this.minValue = 1,
+    this.maxValue = 1000,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   State<QuantityWidget> createState() {
@@ -477,57 +495,54 @@ class _QuantityWidgetState extends State<QuantityWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: const Icon(
-              Icons.remove_circle_rounded,
-              color: AppColors.accentGoldColor,
-            ),
-            padding:
-                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
-            iconSize: 32.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (counter > widget.minValue) {
-                  counter--;
-                }
-                widget.onChanged(counter);
-              });
-            },
+    log("maximum quantity count is : ${widget.maxValue}");
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        IconButton(
+          icon: const Icon(
+            Icons.remove_circle_rounded,
+            color: AppColors.accentGoldColor,
           ),
-          Text(
-            '$counter',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppColors.blackColor,
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
-            ),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
+          iconSize: 32.0,
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            setState(() {
+              if (counter > widget.minValue) {
+                counter--;
+              }
+              widget.onChanged(counter);
+            });
+          },
+        ),
+        Text(
+          '$counter',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: AppColors.blackColor,
+            fontSize: 18.0,
+            fontWeight: FontWeight.w500,
           ),
-          IconButton(
-            icon: const Icon(
-              Icons.add_circle_rounded,
-              color: AppColors.accentGoldColor,
-            ),
-            padding:
-                const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
-            iconSize: 32.0,
-            color: Theme.of(context).primaryColor,
-            onPressed: () {
-              setState(() {
-                if (counter < widget.maxValue) {
-                  counter++;
-                }
-                widget.onChanged(counter);
-              });
-            },
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.add_circle_rounded,
+            color: AppColors.accentGoldColor,
           ),
-        ],
-      ),
+          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 18.0),
+          iconSize: 32.0,
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            setState(() {
+              if (counter < widget.maxValue) {
+                counter++;
+              }
+              widget.onChanged(counter);
+            });
+          },
+        ),
+      ],
     );
   }
 }

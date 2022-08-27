@@ -7,6 +7,7 @@ import 'package:luxurious_chocolate/routes/app_pages.dart';
 import '../../../data/constants/appcolors.dart';
 import '../../../data/constants/appimages.dart';
 import '../../widgets/custom_textfield/custom_textfield.dart';
+import '../../widgets/helper_widgets/helper_toasts.dart';
 
 class LoginFormModule extends StatelessWidget {
   LoginFormModule({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class LoginFormModule extends StatelessWidget {
               const SizedBox(height: 35),
               Text(
                 "Log In".tr,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
@@ -44,7 +45,7 @@ class LoginFormModule extends StatelessWidget {
 
               Text(
                 "Email".tr,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: AppColors.blackColor,
@@ -54,12 +55,13 @@ class LoginFormModule extends StatelessWidget {
               CustomTextField(
                 fieldController: loginController.emailController,
                 hintText: "Enter E-mail",
-                // validator: (value) => FieldValidator().validateEmail(value!)!,
+                textInputAction: TextInputAction.next,
+                validator: (value) => FieldValidator().validateEmail(value!),
               ),
               const SizedBox(height: 12),
               Text(
                 "Password".tr,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: AppColors.blackColor,
@@ -70,8 +72,8 @@ class LoginFormModule extends StatelessWidget {
               CustomPassowrdTextField(
                 fieldController: loginController.passwordController,
                 hintText: "Enter Password",
-                // validator: (value) =>
-                //     FieldValidator().validatePassword(value!)!,
+                textInputAction: TextInputAction.done,
+                validator: (value) => FieldValidator().validatePassword(value!),
               ),
               const SizedBox(height: 20),
 
@@ -80,12 +82,16 @@ class LoginFormModule extends StatelessWidget {
                 onTap: () {
                   Get.toNamed(Routes.forgetPasswordScreenRoute);
                 },
-                child: Text(
-                  "Forgot Password".tr,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.greenColor,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                  child: Text(
+                    "Forgot Password".tr,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.greenColor,
+                    ),
                   ),
                 ),
               ),
@@ -113,23 +119,27 @@ class SignInButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Log In".tr,
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-              color: AppColors.whiteColor,
-            ),
-          ),
-          SizedBox(width: 10),
-          Icon(
-            Icons.arrow_forward_rounded,
-            color: AppColors.whiteColor,
-          ),
-        ],
+      child: Center(
+        child: loginController.isDataLoading.value
+            ? HelperToasts().showCircularWhiteLoader()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Log In".tr,
+                    style: const TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  const Icon(
+                    Icons.arrow_forward_rounded,
+                    color: AppColors.whiteColor,
+                  ),
+                ],
+              ),
       ),
       style: ElevatedButton.styleFrom(
         primary: AppColors.greenColor,
@@ -140,7 +150,9 @@ class SignInButtonModule extends StatelessWidget {
           ),
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        loginController.submitLoginForm();
+      },
     );
   }
 }

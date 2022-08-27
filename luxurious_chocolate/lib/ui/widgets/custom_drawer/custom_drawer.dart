@@ -6,6 +6,8 @@ import 'package:luxurious_chocolate/routes/app_pages.dart';
 
 import '../../../../data/constants/appcolors.dart';
 import '../../../../data/constants/appimages.dart';
+import '../../../data/constants/user_details.dart';
+import '../../../data/sharedpreference_data/sharedpreference_data.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
@@ -87,7 +89,7 @@ class CustomDrawer extends StatelessWidget {
                   tileIcon: Icons.language_rounded,
                   tileText: "Language".tr,
                   onTap: () {
-                    homeController.ChangeLanguageAlertDialog(context);
+                    homeController.changeLanguageAlertDialog(context);
                   },
                 ),
               ],
@@ -95,9 +97,17 @@ class CustomDrawer extends StatelessWidget {
           ),
           singleListItem(
             tileIcon: Icons.login_rounded,
-            tileText: "Registration".tr,
+            tileText: UserDetails.isUserLoggedIn == true
+                ? "Logout".tr
+                : "Registration".tr,
             onTap: () {
               Get.toNamed(Routes.registerScreenRoute);
+              if (UserDetails.isUserLoggedIn == true) {
+                SharedPreferenceData().clearUserLoginDetailsFromPrefs();
+                Get.toNamed(Routes.initial);
+              } else {
+                Get.toNamed(Routes.registerScreenRoute);
+              }
             },
           ),
         ],
@@ -140,6 +150,7 @@ class CategoriesDropDownField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var categoriesList = homeController.categoriesListModel!.data;
     return Padding(
       padding: const EdgeInsets.only(right: 12),
       child: ExpandablePanel(
@@ -169,16 +180,15 @@ class CategoriesDropDownField extends StatelessWidget {
         //   return Container();
         // },
         collapsed: Container(),
-        expanded: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: homeController.categoryList
-              .map(
-                (val) => CategoryListItem(
-                  titleText: val,
-                ),
-              )
-              .toList(),
+        expanded: ListView.builder(
+          shrinkWrap: true,
+          itemCount: categoriesList.length,
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          itemBuilder: (context, index) {
+            return CategoryListItem(
+              titleText: categoriesList[index].categoryName,
+            );
+          },
         ),
       ),
     );
@@ -186,7 +196,7 @@ class CategoriesDropDownField extends StatelessWidget {
 }
 
 class CategoryListItem extends StatelessWidget {
-  CategoryListItem({Key? key, required this.titleText}) : super(key: key);
+  const CategoryListItem({Key? key, required this.titleText}) : super(key: key);
 
   final String titleText;
 
@@ -195,7 +205,7 @@ class CategoryListItem extends StatelessWidget {
     return ListTile(
       dense: true,
       style: ListTileStyle.drawer,
-      contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+      // contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       leading: Container(
         width: 20,
       ),

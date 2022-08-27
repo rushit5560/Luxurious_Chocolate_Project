@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:luxurious_chocolate/data/constants/appcolors.dart';
-import 'package:luxurious_chocolate/data/constants/appimages.dart';
-import 'package:luxurious_chocolate/routes/app_pages.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:luxurious_chocolate/controller/splash_controller/splash_controller.dart';
 
 import '../../../controller/login_controller/login_controller.dart';
+import '../../widgets/helper_widgets/helper_toasts.dart';
 import 'login_screen_widgets.dart';
 
 class LoginScreen extends GetView<LoginController> {
@@ -16,8 +13,12 @@ class LoginScreen extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-        child: LoginFormModule(),
+      body: Obx(
+        () => controller.isDataLoading.value
+            ? HelperToasts().showMainLoaderGif()
+            : SafeArea(
+                child: LoginFormModule(),
+              ),
       ),
     );
   }

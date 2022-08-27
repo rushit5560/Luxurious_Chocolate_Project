@@ -6,6 +6,7 @@ import 'package:luxurious_chocolate/routes/app_pages.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:luxurious_chocolate/controller/splash_controller/splash_controller.dart';
 import 'package:luxurious_chocolate/ui/screens/register_screen/register_screen_widgets.dart';
+import 'package:luxurious_chocolate/ui/widgets/helper_widgets/helper_toasts.dart';
 
 import '../../../controller/register_controller/register_controller.dart';
 
@@ -17,7 +18,13 @@ class RegisterScreen extends GetView<RegisterController> {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SafeArea(
-        child: RegistrationFormModule(),
+        child: Obx(
+          () => controller.isDataLoading.value
+              ? HelperToasts().showMainLoaderGif()
+              : SafeArea(
+                  child: RegistrationFormModule(),
+                ),
+        ),
       ),
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:luxurious_chocolate/controller/home_controller/home_controller.dart';
+import 'package:luxurious_chocolate/data/constants/api_urls.dart';
 import 'package:luxurious_chocolate/data/constants/appcolors.dart';
 import 'package:luxurious_chocolate/data/constants/appimages.dart';
 import 'package:luxurious_chocolate/routes/app_pages.dart';
+import 'package:luxurious_chocolate/ui/widgets/helper_widgets/helper_toasts.dart';
 
 class BannerListModule extends StatefulWidget {
   const BannerListModule({Key? key}) : super(key: key);
@@ -17,6 +20,8 @@ class _BannerListModuleState extends State<BannerListModule> {
 
   @override
   Widget build(BuildContext context) {
+    var bannerList = homeController.bannerListModel!.data;
+
     return Obx(
       () => SizedBox(
           height: homeController.size.height * 0.25,
@@ -25,7 +30,7 @@ class _BannerListModuleState extends State<BannerListModule> {
             children: [
               Expanded(
                 child: PageView.builder(
-                  itemCount: 3,
+                  itemCount: bannerList.length,
                   pageSnapping: true,
                   scrollDirection: Axis.horizontal,
                   reverse: false,
@@ -38,31 +43,40 @@ class _BannerListModuleState extends State<BannerListModule> {
                       margin: const EdgeInsets.all(10),
                       child: Stack(
                         children: [
-                          Image.asset(
-                            homeController.bannerImages[pagePosition],
+                          Image.network(
+                            ApiUrls.iamgePathApiUrl +
+                                bannerList[pagePosition].imagePath,
                             height: homeController.size.height * 0.25,
                             width: double.infinity,
                             fit: BoxFit.cover,
+                            // loadingBuilder: (ctx, bt, bce) {
+                            //   return HelperToasts().showCircularAccentLoader();
+                            // },
                           ),
-                          const Positioned(
+                          Positioned(
                             bottom: 60,
                             left: 35,
                             child: Text(
-                              "our chocolate collection",
-                              style: TextStyle(
-                                color: AppColors.whiteColor,
+                              bannerList[pagePosition].title,
+                              style: const TextStyle(
+                                color: AppColors.blackColor,
                                 fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const Positioned(
-                            bottom: 36,
+                          Positioned(
+                            bottom: 30,
                             left: 35,
                             child: Text(
-                              "new collections",
-                              style: TextStyle(
-                                color: AppColors.whiteColor,
+                              bannerList[pagePosition]
+                                  .content
+                                  .split(">")[1]
+                                  .split("<")[0],
+                              style: const TextStyle(
+                                color: AppColors.blackColor,
                                 fontSize: 16,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
@@ -104,6 +118,7 @@ class ChocolateCategoriesListModule extends StatelessWidget {
   final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
+    var categoriesList = homeController.categoriesListModel!.data;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +138,7 @@ class ChocolateCategoriesListModule extends StatelessWidget {
         GridView.builder(
           padding: const EdgeInsets.all(8),
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: 7,
+          itemCount: categoriesList.length,
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -133,7 +148,9 @@ class ChocolateCategoriesListModule extends StatelessWidget {
             childAspectRatio: 1.9,
           ),
           itemBuilder: (ctx, ind) {
-            return const CategorySingleItem();
+            return CategorySingleItem(
+              index: ind,
+            );
           },
         ),
       ],
@@ -142,12 +159,16 @@ class ChocolateCategoriesListModule extends StatelessWidget {
 }
 
 class CategorySingleItem extends StatelessWidget {
-  const CategorySingleItem({
+  CategorySingleItem({
     Key? key,
+    required this.index,
   }) : super(key: key);
 
+  final int index;
+  final homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
+    var categoriesList = homeController.categoriesListModel!.data;
     return Stack(
       children: [
         Image.asset(
@@ -160,12 +181,18 @@ class CategorySingleItem extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "ChocoBox",
-                    style: TextStyle(
-                      color: AppColors.blackColor,
-                      fontWeight: FontWeight.bold,
+                  SizedBox(
+                    height: 30,
+                    width: homeController.size.width * 0.4,
+                    child: Text(
+                      categoriesList[index].categoryName,
+                      style: const TextStyle(
+                        color: AppColors.blackColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 5),
@@ -182,7 +209,8 @@ class CategorySingleItem extends StatelessWidget {
                       Get.toNamed(
                         Routes.productListScreenRoute,
                         arguments: [
-                          "ChocoBox",
+                          categoriesList[index].categoryId,
+                          categoriesList[index].categoryName,
                         ],
                       );
                     },
@@ -214,10 +242,10 @@ class TopProductsListModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
           child: Text(
             "Top Products".tr,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.blackColor,
               fontSize: 18,
               fontWeight: FontWeight.w700,

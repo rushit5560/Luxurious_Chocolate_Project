@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:luxurious_chocolate/controller/contact_us_controller/contact_us_controller.dart';
+import 'package:luxurious_chocolate/ui/widgets/helper_widgets/helper_toasts.dart';
 
 import '../../../data/constants/appcolors.dart';
+import '../../../data/field_validation.dart';
 import '../../widgets/custom_textfield/custom_textfield.dart';
 
 class GetInTouchModule extends StatelessWidget {
@@ -87,7 +89,7 @@ class ContactInfoRowMoule extends StatelessWidget {
       children: [
         Icon(
           iconData,
-          size: 30,
+          size: 25,
         ),
         const SizedBox(width: 15),
         Expanded(
@@ -100,7 +102,7 @@ class ContactInfoRowMoule extends StatelessWidget {
                 style: const TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18,
+                  fontSize: 17,
                 ),
               ),
               const SizedBox(height: 10),
@@ -108,7 +110,7 @@ class ContactInfoRowMoule extends StatelessWidget {
                 descText,
                 style: const TextStyle(
                   color: AppColors.blackColor,
-                  fontSize: 18,
+                  fontSize: 16,
                 ),
               ),
             ],
@@ -128,113 +130,121 @@ class ContactUsModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 15),
+      child: Form(
+        key: contactController.formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 15),
 
-          Text(
-            "Contact Us".tr,
-            style: TextStyle(
-              color: AppColors.blackColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
+            Text(
+              "Contact Us".tr,
+              style: const TextStyle(
+                color: AppColors.blackColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
             ),
-          ),
-          const SizedBox(height: 5),
-          Divider(
-            thickness: 1,
-            color: AppColors.accentGoldColor.withOpacity(0.6),
-          ),
-          const SizedBox(height: 15),
+            const SizedBox(height: 5),
+            Divider(
+              thickness: 1,
+              color: AppColors.accentGoldColor.withOpacity(0.6),
+            ),
+            const SizedBox(height: 15),
 
-          //form fields
-          Text(
-            "Name".tr,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+            //form fields
+            Text(
+              "Name".tr,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          CustomTextField(
-            fieldController: contactController.nameController,
-            hintText: "Your Name",
+            const SizedBox(height: 10),
+            CustomTextField(
+              fieldController: contactController.nameController,
+              hintText: "Your Name",
+              textInputAction: TextInputAction.next,
+              validator: (value) => FieldValidator().validateName(value!),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              "Email".tr,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackColor,
+              ),
+            ),
+            const SizedBox(height: 10),
+            CustomTextField(
+              fieldController: contactController.emailController,
+              hintText: "E-mail",
+              textInputAction: TextInputAction.next,
+              validator: (value) => FieldValidator().validateEmail(value!),
+            ),
+            // const SizedBox(height: 12),
+            // Text(
+            //   "Phone Number".tr,
+            //   style: TextStyle(
+            //     fontSize: 15,
+            //     fontWeight: FontWeight.w500,
+            //     color: AppColors.blackColor,
+            //   ),
+            // ),
+            // const SizedBox(height: 10),
+            // CustomTextField(
+            //   fieldController: contactController.phoneController,
+            //   hintText: "Your Phone",
             // validator: (value) => FieldValidator().validateEmail(value!)!,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "Email".tr,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+            // ),
+            const SizedBox(height: 12),
+            Text(
+              "Subject".tr,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          CustomTextField(
-            fieldController: contactController.emailController,
-            hintText: "E-mail",
-            // validator: (value) => FieldValidator().validateEmail(value!)!,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "Phone Number".tr,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+            const SizedBox(height: 10),
+            CustomTextField(
+              fieldController: contactController.subjectController,
+              hintText: "Subject",
+              textInputAction: TextInputAction.next,
+              validator: (value) =>
+                  FieldValidator().validateSubjectField(value!),
             ),
-          ),
-          const SizedBox(height: 10),
-          CustomTextField(
-            fieldController: contactController.phoneController,
-            hintText: "Your Phone",
-            // validator: (value) => FieldValidator().validateEmail(value!)!,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "Subject".tr,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+            const SizedBox(height: 12),
+            Text(
+              "Comment".tr,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: AppColors.blackColor,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          CustomTextField(
-            fieldController: contactController.subjectController,
-            hintText: "Subject",
-            // validator: (value) => FieldValidator().validateEmail(value!)!,
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "Comment".tr,
-            style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+
+            const SizedBox(height: 10),
+            CustomTextField(
+              fieldController: contactController.commentController,
+              hintText: "Your Message",
+              textInputAction: TextInputAction.next,
+              validator: (value) =>
+                  FieldValidator().validateMessageField(value!),
             ),
-          ),
 
-          const SizedBox(height: 10),
-          CustomTextField(
-            fieldController: contactController.commentController,
-            hintText: "Your Message",
-            // validator: (value) =>
-            //     FieldValidator().validatePassword(value!)!,
-          ),
+            //terms & checks
 
-          //terms & checks
+            const SizedBox(height: 30),
 
-          const SizedBox(height: 30),
-
-          // const SizedBox(height: 25),
-          SubmitButtonModule(),
-          const SizedBox(height: 15),
-        ],
+            // const SizedBox(height: 25),
+            SubmitButtonModule(),
+            const SizedBox(height: 15),
+          ],
+        ),
       ),
     );
   }
@@ -247,35 +257,41 @@ class SubmitButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Text(
-            "Submit",
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.bold,
-              color: AppColors.whiteColor,
+    return Obx(
+      () => ElevatedButton(
+        child: contactController.isDataLoading.value
+            ? HelperToasts().showCircularWhiteLoader()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Submit",
+                    style: TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.whiteColor,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(
+                    Icons.arrow_forward_rounded,
+                    color: AppColors.whiteColor,
+                  ),
+                ],
+              ),
+        style: ElevatedButton.styleFrom(
+          primary: AppColors.greenColor,
+          fixedSize: Size(contactController.size.width, 50),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(25),
             ),
           ),
-          SizedBox(width: 10),
-          Icon(
-            Icons.arrow_forward_rounded,
-            color: AppColors.whiteColor,
-          ),
-        ],
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: AppColors.greenColor,
-        fixedSize: Size(contactController.size.width, 50),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(25),
-          ),
         ),
+        onPressed: () {
+          contactController.submitUserContactDetailsApi();
+        },
       ),
-      onPressed: () {},
     );
   }
 }

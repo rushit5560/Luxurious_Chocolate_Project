@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:luxurious_chocolate/controller/login_controller/login_controller.dart';
+import 'package:luxurious_chocolate/data/constants/api_urls.dart';
 import 'package:luxurious_chocolate/data/field_validation.dart';
 import 'package:luxurious_chocolate/routes/app_pages.dart';
 
@@ -100,20 +101,23 @@ class _FilterViewProductsModuleState extends State<FilterViewProductsModule> {
 }
 
 class GridViewProductsModule extends StatelessWidget {
-  const GridViewProductsModule({Key? key}) : super(key: key);
+  GridViewProductsModule({Key? key}) : super(key: key);
+  final prodListController = Get.find<ProductListController>();
 
   @override
   Widget build(BuildContext context) {
+    var productsList = prodListController.productsListModel!.data;
     return GridView.builder(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 8,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      itemCount: productsList.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 1,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
+        mainAxisExtent: prodListController.size.height * 0.22,
       ),
 
       scrollDirection: Axis.vertical,
@@ -127,17 +131,25 @@ class GridViewProductsModule extends StatelessWidget {
       //   childAspectRatio: 1.9,
       // ),
       itemBuilder: (ctx, ind) {
-        return ProductGridSingleItem();
+        return ProductGridSingleItem(
+          index: ind,
+        );
       },
     );
   }
 }
 
 class ProductGridSingleItem extends StatelessWidget {
-  ProductGridSingleItem({Key? key}) : super(key: key);
+  ProductGridSingleItem({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
   final prodListController = Get.find<ProductListController>();
   @override
   Widget build(BuildContext context) {
+    var product = prodListController.productsListModel!.data[index];
     return Stack(
       children: [
         GestureDetector(
@@ -145,7 +157,8 @@ class ProductGridSingleItem extends StatelessWidget {
             Get.toNamed(
               Routes.productDetailsScreenRoute,
               arguments: [
-                "Prod Name",
+                product.id,
+                product.productname,
               ],
             );
           },
@@ -158,36 +171,37 @@ class ProductGridSingleItem extends StatelessWidget {
               ),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12),
                   ),
-                  child: Image.asset(
-                    "assets/images/choclate1.jpg",
+                  child: Image.network(
+                    ApiUrls.iamgePathApiUrl + product.showimg,
                     fit: BoxFit.cover,
-                    height: prodListController.size.width * 0.35,
-                    // width: homeController.size.width * 0.3,
+                    height: prodListController.size.width * 0.32,
+                    width: prodListController.size.width * 0.45,
                   ),
                 ),
                 // const SizedBox(height: 5),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // const SizedBox(height: 5),
                     Text(
-                      "Prod name",
-                      style: TextStyle(
+                      product.productname,
+                      style: const TextStyle(
                         color: AppColors.blackColor,
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    // const SizedBox(height: 2),
                     Text(
-                      "\$27",
-                      style: TextStyle(
+                      "\$${product.totalcost}",
+                      style: const TextStyle(
                         color: Colors.green,
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -195,14 +209,14 @@ class ProductGridSingleItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 0),
+                // const SizedBox(height: 5),
               ],
             ),
           ),
         ),
         const Positioned(
-          right: 5,
-          top: 15,
+          right: 8,
+          top: 12,
           child: Padding(
             padding: EdgeInsets.only(right: 8),
             child: Center(
@@ -225,11 +239,12 @@ class ListViewProductsModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var productsList = prodListController.productsListModel!.data;
     return ListView.builder(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 8,
+      itemCount: productsList.length,
       // itemExtent: prodListController.size.width * 0.3,
 
       scrollDirection: Axis.vertical,
@@ -243,17 +258,25 @@ class ListViewProductsModule extends StatelessWidget {
       //   childAspectRatio: 1.9,
       // ),
       itemBuilder: (ctx, ind) {
-        return ProductListSingleItem();
+        return ProductListSingleItem(
+          index: ind,
+        );
       },
     );
   }
 }
 
 class ProductListSingleItem extends StatelessWidget {
-  ProductListSingleItem({Key? key}) : super(key: key);
+  ProductListSingleItem({
+    Key? key,
+    required this.index,
+  }) : super(key: key);
+
+  final int index;
   final prodListController = Get.find<ProductListController>();
   @override
   Widget build(BuildContext context) {
+    var product = prodListController.productsListModel!.data[index];
     return Stack(
       children: [
         GestureDetector(
@@ -261,7 +284,8 @@ class ProductListSingleItem extends StatelessWidget {
             Get.toNamed(
               Routes.productDetailsScreenRoute,
               arguments: [
-                "Prod Name",
+                product.id,
+                product.productname,
               ],
             );
           },
@@ -283,11 +307,11 @@ class ProductListSingleItem extends StatelessWidget {
                     topLeft: Radius.circular(12),
                     bottomLeft: Radius.circular(12),
                   ),
-                  child: Image.asset(
-                    "assets/images/choclate1.jpg",
+                  child: Image.network(
+                    ApiUrls.iamgePathApiUrl + product.showimg,
                     fit: BoxFit.cover,
                     height: prodListController.size.height * 0.15,
-                    // width: homeController.size.width * 0.3,
+                    width: prodListController.size.width * 0.3,
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -296,21 +320,21 @@ class ProductListSingleItem extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        "Prod name",
-                        style: TextStyle(
+                        product.productname,
+                        style: const TextStyle(
                           color: AppColors.blackColor,
-                          fontSize: 17,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                       SizedBox(height: 10),
                       Text(
-                        "\$27",
-                        style: TextStyle(
+                        "\$${product.totalcost}",
+                        style: const TextStyle(
                           color: Colors.green,
-                          fontSize: 19,
+                          fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
